@@ -1,0 +1,14 @@
+# Ignore all text files
+*.txt
+
+# Ignore all json files
+*.json
+
+# Ignore all jupyter notebook files
+*.ipynb
+
+# Ignore all sql files
+*.sql
+
+# Ignore all zip files
+*.zip

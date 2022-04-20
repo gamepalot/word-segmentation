@@ -1,0 +1,98 @@
+* {
+    text-decoration: none;
+}
+
+.container {
+    display: block;
+    margin: 0;
+    padding: 10px 0px 10px 0px;
+}
+
+.project {
+    /* display: block; */
+    margin-top: 15px;
+    /* justify-content: space-evenly; */
+}
+
+.add-project {
+    background-color: #8dc5db;
+    margin-left: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    color: #345DA7;
+}
+
+.add-project:hover {
+    background-color: #4b97de;
+    color: white;
+    border-radius: 15px;
+}
+
+.group {
+    /* display: flex; */
+    color: #495057;
+    padding: 10px;
+    border-radius: 10px 10px 0px 0px;
+    margin-right: 0%;
+    /* justify-content: left; */
+}
+
+.group:hover {
+    /* text-decoration: underline 2px solid red; */
+    border-bottom: 2px solid red;
+    background-color: aquamarine;
+}
+
+.my-pj {
+    font-size: 20px;
+    padding: 0px 20px 20px 20px;
+}
+
+.table {
+    border-radius: 10px;
+    background-color: white;
+    margin: 15px;
+    /* width: 95%; */
+}
+
+.table1 {
+    overflow-x: auto;
+    /* overflow-y: auto; */
+    table-layout: auto;
+    border-radius: 10px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 1500px;
+    /* border-radius: 15px; */
+    /* border: 1px solid black; */
+    /* margin-left: 20px; */
+    /* margin-right: 50%; */
+}
+
+table .col-data {
+    /* background-color: aquamarine; */
+    border-radius: 15px;
+    height: 40px;
+}
+
+table .col-name {
+    background-color: burlywood;
+    /* border-radius: 15px; */
+    height: 30px;
+}
+
+::-webkit-scrollbar {
+    width: 1px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 15px;
+    background: #a3a3a3;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2px;
+    border-radius: 15px;
+}

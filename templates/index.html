@@ -1,0 +1,22 @@
+{% extends 'layout.html' %} {% load static %} {% block content %}
+<div class="container-fluid" style="background-color: #e2e8f0;">
+    <div class="row">
+        <div class="col-auto" style="padding-left: 17px;">
+            <a class="btn btn-outline-primary shadow-sm" href="#" data-bs-toggle="modal" data-bs-target="#Modaladd">
+                <i class="bi bi-folder-plus"></i> Add Project
+            </a>
+        </div>
+
+        <!-- <div class="col-auto"> -->
+        <!-- <a href="#" class="btn btn-outline-danger active">
+            Group By Project
+            </a>
+            <!-- <a href="#" class="btn btn-outline-primary">
+            Group By Date
+            </a> -->
+        <!-- </div> -->
+    </div>
+</div>
+{% include 'project/table.html' %} {% include 'project/modal_add_project.html' %} {% endblock %} {% block script %}
+<script src="{% static 'js/project/table.js' %}"></script>
+{% endblock %}

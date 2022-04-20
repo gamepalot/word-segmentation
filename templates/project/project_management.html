@@ -1,0 +1,97 @@
+<div class="modal fade" id="DialogEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header d-flex align-items-center btn-dark">
+                <h6 class="modal-title mb-0" id="exampleModalLabel">Project Management</h6>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- * Project Info -->
+                <h6 class="card-header">Project Info</h6>
+                <div class="card card-style-1 shadow-sm" style="margin-bottom: 10px;">
+                    <div class="card-body" style="padding-bottom: unset;">
+                        <div class="row" style="padding-bottom: 5px;">
+                            <div class="col-sm-auto">
+                                <h6>Name</h6>
+                            </div>
+                            <div class="col-sm-4 text-secondary" id="project_name">
+                                <!-- <h6>: Game1</h6> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- * Files Management -->
+                <h6 class="card-header">Files Insert & Management</h6>
+                <div class="card card-style-1 shadow-sm">
+                    <div class="card-body">
+                        <form id="FormUploadFiles" action="{% url 'uploadfiles' %}" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                            <div class="row" style="padding-bottom: 5px;">
+                                <div class="col-auto">
+                                    <h6 class="align-middle">Upload Purpose :</h6>
+                                </div>
+                                <div class="col-auto">
+                                    <span class="radio-inline">
+                                        <input type="radio" name="upload-mode" id="mode-upload-seg" value="0">
+                                        <label class="btn btn-sm btn-faded-success has-icon" for="mode-upload-seg"> Upload &amp; Segmentation</label>
+                                        <input type="radio" name="upload-mode" id="mode-upload-only" value="1" >
+                                        <label class="btn btn-sm btn-faded-success has-icon" for="mode-upload-only"> Upload Only </label>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row rounded align-items-center justify-content-start ">
+                                <div class="col-auto">
+                                    <input class="align-middle" type="file" id="file" name="myfile" accept=".txt" multiple>
+                                    <button class="btn btn-sm btn-secondary" type="submit">Upload</button>
+                                    <button class="btn btn-sm btn-light" type="reset"> Clear</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row mx-0 my-0" id="statusUpload">
+                </div>
+                <div class="row mx-0 my-0" id="statusUploadError">
+                </div>
+                <div class="table-responsive rounded" style="margin-top: 5px;">
+                    <table id="tbFile" class="table table-hover table-nostretch mb-0 table-sm">
+                        <thead class="table-secondary align-middle">
+                            <tr>
+                                <th>
+                                    <div class="btn-group btn-group-sm show">
+                                        <!-- Select all -->
+                                        <label class="btn btn-light ">
+                                        <span class="custom-control custom-control-nolabel custom-checkbox primary">
+                                            <input type="checkbox" id="checkAll" class="custom-control-input" onClick="checkAll()" >
+                                            <span class="custom-control-label"></span>
+                                        </span>
+                                    </label>
+                                    </div>
+                                </th>
+                                <th>No.</th>
+                                <th>File name</th>
+                                <th>Word now/Word all</th>
+                                <th>Created Date</th>
+                                <th>Status</th>
+                                <th class="text-center">Edit file</th>
+                            </tr>
+                        </thead>
+                        <!-- <tbody id="table_files">
+                        </tbody> -->
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <small class=" align-middle">selected 0 file:</small>
+                        <button type="button" onClick="deleteFiles()" class="btn text-danger btn-sm"><i class="bi bi-file-earmark-minus"></i>&nbsp;Delete</button>
+                    </div>
+                </div>
+                <!-- <div class="row">
+                    <span id="spanShowStatus"></span>
+                </div> -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="edit_project_close" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

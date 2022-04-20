@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <!-- ! Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+
+    <!-- ! Font awsome -->
+    <script src="https://kit.fontawesome.com/86520e8db5.js" crossorigin="anonymous"></script>
+
+    <!-- ! bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <!-- ! bootstrap npm -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+
+</head>
+
+<body>
+
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Login Form -->
+            <form action="{% url 'login' %}" method="POST">
+                {% csrf_token %}
+                <input type="text" id="username" class="fadeIn second" name="username" placeholder="username">
+                <input type="text" id="password" class="fadeIn third" name="password" placeholder="password">
+                <input type="submit" class="fadeIn fourth" value="Log In">
+            </form>
+            <!-- Remind Passowrd -->
+            <div id="formFooter">
+                <a class="underlineHover" href="#">Forgot Password?</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

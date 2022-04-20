@@ -1,0 +1,62 @@
+{% extends 'layout.html' %} {% load static %} {% block style %}
+<style>
+    .horizontal {
+        display: flex;
+        /* flex-direction: row; */
+        border: 1px solid silver;
+        overflow: hidden;
+        height: 100%;
+    }
+    
+    .esquerda {
+        flex: 0 0 auto;
+        padding: 10px;
+        width: 200px;
+        min-height: 200px;
+        min-width: 100px;
+        max-width: 80%;
+        white-space: nowrap;
+        background: #838383;
+        color: white;
+    }
+    
+    .divisor {
+        flex: 0 0 auto;
+        width: 1px;
+        background: #535353;
+        min-height: 200px;
+        cursor: col-resize;
+    }
+    
+    .direita {
+        flex: 1 1 auto;
+        padding: 10px;
+        width: 100%;
+        min-height: 200px;
+        min-width: 200px;
+        background: #eee;
+    }
+</style>
+{% endblock %} {% block content %}
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/RickStrahl/jquery-resizable/master/src/jquery-resizable.js"></script>
+<div class="horizontal">
+    <div class="esquerda">
+        Esquerda
+    </div>
+    <div class="divisor">
+    </div>
+    <div class="direita">
+        Direita
+    </div>
+</div>
+{% endblock %} {% block script %}
+<script src="{% static 'ajax/jquery/3.6.0/jquery.min.js' %}" type="text/javascript"></script>
+<script type="text/javascript" src="https://rawgit.com/RickStrahl/jquery-resizable/master/src/jquery-resizable.js"></script>
+<script>
+    $(".esquerda").resizable({ //determina a div que será redimensionada
+        handleSelector: ".divisor", //determina a div que servirá de controle
+        resizeHeight: false //desabilita o redimensionamento vertical
+    });
+</script>
+{% endblock %}

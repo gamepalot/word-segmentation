@@ -1,0 +1,49 @@
+<!-- <div class="container-fluid border border-light shadow" style="background-color: white; border-radius: 15px; width: 98%;"> -->
+
+<div class="tab-pane fade active show shadow-sm m-3" id="tab-project" role="tabpanel" aria-labelledby="home-tab-simple">
+    <div class="card card-style-1 mt-3">
+        <h6 class="card-header">My Project</h6>
+        <div class="table-responsive">
+            <!-- <form action="deletepj" method="GET"> -->
+            <table class="table table-hover table-nostretch table-align-middle mb-0 table-sm" style="background-color: white;">
+                <thead class="table-secondary">
+                    <tr>
+                        <th class="text-center">No.</th>
+                        <th>Project name</th>
+                        <th>Segmented files</th>
+                        <th>Complete files</th>
+                        <th>All files</th>
+                        <th>Created date</th>
+                        <th>Last submitted date</th>
+                        <th>Operation</th>
+                    </tr>
+                </thead>
+                <tbody id="options">
+                    {% if data|length != 0 %} {% for datas in data %}
+                    <tr class="align-middle">
+                        <td class="text-center">{{ forloop.counter }}</td>
+                        <td>({{ datas.0 }})&nbsp;{{ datas.2 }}</td>
+                        <td>{{ datas.6 }}</td>
+                        <td>0</td>
+                        <td>{{ datas.7 }}</td>
+                        <td>{{ datas.3 }}</td>
+                        <td>{{ datas.4 }}</td>
+                        <td>
+                            <button class="btn text-primary" id="edit_project" onclick="edit_project(this)" type="button" data-bs-toggle="modal" data-bs-target="#DialogEdit" value="{{ datas.0 }}"><i class="bi bi-pencil-square"></i></button>
+                            <button class="btn text-danger" onclick="delete_project(this)" type="button" data-bs-toggle="modal" data-bs-target="#DialogDelete" value="{{ datas.0 }}" data-name="{{ datas.2 }}"><i class="bi bi-folder-x"></i></button>
+                        </td>
+                    </tr>
+                    {% endfor %} {% else %}
+                    <tr>
+                        <td colspan="8" class="text-center">No project</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+            <!-- </form> -->
+        </div>
+    </div>
+</div>
+
+<!-- </div> -->
+{% include 'project/project_management.html' %} {% include 'project/modal_delete_project.html' %}

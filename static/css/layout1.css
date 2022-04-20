@@ -1,0 +1,113 @@
+:root {
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* font-size: 18px; */
+}
+
+body {
+    background-color: #EEEEEE;
+    text-decoration: none;
+}
+
+.navbar {
+    background-color: white;
+    display: flex;
+    /* justify-content: flex-end; */
+    /* align-items: center; */
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #495057;
+}
+
+.nav-list {
+    list-style-type: none;
+}
+
+.profile {
+    display: block;
+    padding: 15px 10px;
+}
+
+.nav-list .list-item1 {
+    display: block;
+    padding: 15px 10px;
+}
+
+.nav-list .list-item2 {
+    display: inline-block;
+    padding: 10px 10px;
+}
+
+.nav-list .list-item2:hover {
+    background-color: rgb(13, 198, 223);
+    border-radius: 15px 15px 0px 0px;
+}
+
+.profile .profile-logo {
+    width: 1.6rem;
+}
+
+.profile .profile-item:hover {
+    background-color: #EEEEEE;
+}
+
+.navbar .logo {
+    width: 1.2rem;
+}
+
+.menu-line {
+    width: 20px;
+    height: 3px;
+    background-color: #495057;
+    margin-bottom: 4px;
+}
+
+.menu {
+    display: none;
+}
+
+@media all and (max-width: 990px) {
+    .menu {
+        display: block;
+        position: absolute;
+        left: 15px;
+        top: 15px;
+    }
+    .navbar {
+        flex-direction: row;
+    }
+    .nav-list .list-item2 {
+        display: block;
+    }
+    .menu-none {
+        display: none;
+    }
+    .nav-list {
+        display: none;
+    }
+    .active {
+        display: block;
+    }
+}
+
+
+/* .profile {
+    display: flex;
+    justify-content: flex-end;
+} */
+
+
+/* 
+.nav-list {
+    text-decoration: none;
+    color: #495057;
+    width: 15rem;
+} */

@@ -1,0 +1,12 @@
+del {
+    background-color: red;
+    border-radius: 0px;
+    margin: 0px 4px 0px 4px;
+}
+
+ins {
+    background-color: green;
+    text-decoration: none;
+    border-radius: 0px;
+    /* margin: 0px 4px 0px 4px; */
+}

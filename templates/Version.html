@@ -1,0 +1,44 @@
+{% extends 'layout.html' %} {% load static %} {% block content %}
+
+<div class="container-fluid" style="padding : 10px 30px 10px 30px">
+    <div class="row p-2 bg-white rounded align-items-center justify-content-center shadow-sm border border-light">
+        <div class="col-auto">
+            <div class="text-black-50">
+                Filter file :
+            </div>
+        </div>
+        <div class="col-md">
+            <select class="form-select text-black-50" id="filterProjects" aria-label="Default select example">
+                <option value="0">Select your project</option>
+                {% for datas in project_name %}
+                {% if datas.1 == project_id %}
+                <option value="{{ datas.1 }}" selected>({{ datas.1 }}) {{ datas.0 }}</option>
+                {% else %}
+                <option value="{{ datas.1 }}">({{ datas.1 }}) {{ datas.0 }}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md">
+            <select class="form-select text-black-50" id="filterFiles" aria-label="Default select example" disabled>
+                <option value="0">Select your file</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="accordion rounded-3" id="accordionHistory">
+</div>
+
+<div class="container-fluid" id="button-submit" style="padding: 0px 20px 20px 0px;">
+    <div class="row justify-content-end">
+        <div class="col-sm-auto">
+            <a type="button" class="btn btn-danger shadow" href="" id="backEdit" data-bs-target="#accordionHistory"><i class="bi bi-arrow-left"></i> Edit</a>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %} {% block script %}
+<script src="{% static 'js/version-history/version.js' %}"></script>
+{% endblock %}

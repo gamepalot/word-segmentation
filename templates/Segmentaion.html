@@ -1,0 +1,254 @@
+{% extends 'layout.html' %} {% load static %}
+<link rel="stylesheet" href="{% static 'css/segmentation.css' %}" type="text/css"> {% block style %}
+<style>
+    #horizontal {
+        display: flex;
+        overflow: hidden;
+        flex-direction: row;
+        height: 100%;
+    }
+    
+    #original_file {
+        flex: 0 0 auto;
+        /* padding: 0; */
+        width: 49%;
+        min-width: 10%;
+        max-width: 85%;
+        text-decoration: word-break;
+    }
+    
+    .divisor {
+        flex: 0 0 auto;
+        width: 10px;
+        background-color: black;
+        cursor: col-resize;
+        text-align: center;
+        padding-top: 20%;
+    }
+    
+    #segmented_file {
+        flex: 1 1 auto;
+        /* padding: 0; */
+        width: auto;
+        text-decoration: word-break;
+    }
+</style>
+{% endblock %} {% block content %}
+
+
+<div class="container-fluid" style="padding : 10px 30px 10px 30px">
+    <div class="row p-2 bg-white rounded align-items-center justify-content-center shadow-sm border border-light">
+        <div class="col-auto">
+            <div class="text-black-50">
+                Filter file :
+            </div>
+        </div>
+        <div class="col-md">
+            <select class="form-select text-black-50" id="filterProjects" aria-label="Default select example">
+                <option value="0">Select your project</option>
+                {% for datas in project_name %}
+                {% if datas.1 == project_id %}
+                <option value="{{ datas.1 }}" selected>({{ datas.1 }}) {{ datas.0 }}</option>
+                {% else %}
+                <option value="{{ datas.1 }}">({{ datas.1 }}) {{ datas.0 }}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md">
+            <select class="form-select text-black-50" id="filterFiles" aria-label="Default select example" disabled>
+                <option value="0">Select your file</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="container-fluid invisible" id="button-action" style="background-color: #e2e8f0; padding : 0px 17px 5px 17px">
+    <div class="row justify-content-between align-items-center">
+        <div class="col-auto">
+            <div class="btn-group dropend">
+                <button class="btn btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                    <i class="bi bi-gear"></i>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li class="dropdown-item">Font size&nbsp;:&nbsp;
+                        <label class="btn-sm btn-secondary">
+                                <input type="radio" name="options-font" id="font1" checked> 16
+                        </label>
+                        <label class="btn-sm btn-secondary">
+                                <input type="radio" name="options-font" id="font2"> 20
+                        </label>
+                        <label class="btn-sm btn-secondary">
+                                <input type="radio" name="options-font" id="font3"> 24
+                        </label> &nbsp;px
+                    </li>
+                    <li class="dropdown-item">Highlight word&nbsp;:&nbsp;
+                        <label class="btn-sm btn-success">
+                            <input type="radio" name="options-highlight" id="highlight1" checked> On
+                        </label>
+                        <label class="btn-sm btn-danger">
+                            <input type="radio" name="options-highlight" id="highlight2"> Off
+                        </label>
+                    </li>
+                    <li class="dropdown-item">Theme&nbsp;:&nbsp;</li>
+                    <li class="dropdown-item">Export&nbsp;:&nbsp;</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-sm btn-outline-dark disabled" type="button" id="btn-split" data-bs-toggle="modal" data-bs-target="#modalSplit">
+                <i class="bi bi-layout-split"></i> Split
+            </button>
+            <button class="btn btn-sm btn-outline-dark disabled" type="button" id="btn-merge">
+                <i class="bi bi-square"></i> Merge
+            </button>
+            <button class="btn btn-sm btn-outline-dark disabled" type="button" id="btn-edit" data-bs-toggle="modal" data-bs-target='#modalEdit'>
+                <i class="bi bi-pencil-square"></i> Edit
+            </button>
+        </div>
+        <div class="col-auto">
+            <div class="row">
+                <div class="col text-center">
+                    <a class="btn btn-sm" id="btnUndo" onclick="reAction('undo')">
+                        <i class="fas fa-reply"></i>
+                        <div class="">undo</div>
+                    </a>
+                </div>
+                <div class="col text-center">
+                    <a class="btn btn-sm" id="btnRedo" onclick="reAction('redo')">
+                        <i class="fas fa-share"></i>
+                        <div class="">redo</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-auto">
+            <a class="btn btn-sm btn-warning text-white" id="keepVersion" data-bs-toggle='modal' data-bs-target='#modalVersion'>Version</a>
+            <a class="btn btn-sm btn-primary" href="" id="history">History</a>
+            <a class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#ModalSubmit">
+                <i class="bi bi-file-earmark-excel"></i> Complete File
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalSplit" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Split word</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3 text-center">
+                    <div class="form-control" id="inputSplit" onkeyup="checkPipe(this)" contenteditable="true"></div>
+                </div>
+                <div class="mb-3">
+                    <div class="text-danger">* กรอก | (Pipe) ในช่องที่ต้องการแบ่งคำ</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button id="submit-split" type="button" class="btn btn-primary" disabled>Split</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalEdit" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit word</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3 text-center">
+                    <div class="form-control" id="inputEdit" onkeyup="checkEdit(this)" contenteditable="true"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button id="submit-edit" type="button" class="btn btn-primary" disabled>Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" style="padding: 0px 20px 20px 20px;">
+    <div class="bg-secondary rounded shadow border border-light px-2" style="height: 620px;" id="horizontal">
+        <div class="text-white bg-secondary shadow-sm rounded-3" id="original_file"></div>
+        <div class="rounded-3 text-white divisor">||</div>
+        <div class="text-white bg-secondary shadow-sm rounded-3" id="segmented_file"></div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalSubmit" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Submit File</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="">
+                <h6>R U Sure !</h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" id="btn_submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalVersion" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">เก็บเวอร์ชัน</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6>คุณต้องการเก็บเวอร์ชันนี้เป็นเวอร์ชันที่ 1 ใช่หรือไม่</h6>
+            </div>
+            <div class="modal-footer" id="modal-footer-version">
+                <button type="button" class="btn btn-primary" onclick='keepVersion()'>เก็บเวอร์ชัน</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %} {% block script %}
+<script src="{% static 'js/segmentation/segmentation.js' %}"></script>
+<script src="{% static 'js/segmentation/filterFiles.js' %}"></script>
+<script src="{% static 'js/segmentation/keepVersion.js' %}"></script>
+<script src="{% static 'js/segmentation/setting.js' %}"></script>
+<script src="https://rawgit.com/RickStrahl/jquery-resizable/master/src/jquery-resizable.js"></script>
+<script>
+    $("#original_file").resizable({
+        handleSelector: ".divisor",
+        resizeHeight: false
+    });
+
+    function checkPipe(input) {
+        console.log(input);
+        var text = input.innerText;
+        var regex = /\|/;
+        if (regex.test(text) && text.length > 1 && text[text.length - 1] != '|' && text[0] != '|') {
+            document.getElementById("submit-split").disabled = false;
+        } else {
+            document.getElementById("submit-split").disabled = true;
+        }
+    }
+
+    function checkEdit(input) {
+        var text = input.innerText;
+        if (text.length > 0 && text != $("[id='btn-select'][nid='" + listIndex + "']").text()) {
+            document.getElementById("submit-edit").disabled = false;
+        } else {
+            document.getElementById("submit-edit").disabled = true;
+        }
+    }
+</script>
+
+{% endblock %}

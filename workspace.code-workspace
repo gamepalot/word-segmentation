@@ -1,0 +1,13 @@
+{
+    "folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "c:\\xampp\\htdocs\\Tagging_2021_last"
+		}
+	],
+    "settings": {
+        "liveServer.settings.multiRootWorkspaceName": "D:"
+    }
+}
