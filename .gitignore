@@ -12,4 +12,5 @@ script.sql
 
 # Ignore all zip files
 *.zip
-*.code-workspace
+
+workspace.code-workspace
