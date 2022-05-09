@@ -51,6 +51,8 @@ def selectFiles(request):
         path_file = './static/upload/segmented_file/'
         context = {}
         replace1 = []
+        replace2 = []
+        replace3 = {}
         context_list = {}
         for filename in file_list:
             list_arr = []
@@ -68,10 +70,22 @@ def selectFiles(request):
                     default_val = action_data[actions][0]
                     replace_val = action_data[actions][1]
                     arr = replace_list(arr, default_val, replace_val) #! Function
+                    if len(default_val) == 1 and len(replace_val) == 1 :
+                        mode = 'edit'
+                    elif len(default_val) == 1 and len(replace_val) > 1 :
+                        mode = 'split'
+                    elif len(default_val) > 1 and len(replace_val) == 1 :
+                        mode = 'merge'
                     replace1.extend(replace_val)
+                    replace2.extend([mode for x in replace_val])
             for arr_list in arr:
                 if arr_list in replace1:
-                    list_arr.append('<span class="bg-danger mx-1 text-black rounded">%s</span>'%(raw_data[str(arr_list)]['val']))
+                    if replace2[replace1.index(arr_list)] == 'edit' :
+                        list_arr.append('<span class="bg-danger mx-1 text-black rounded">%s</span>'%(raw_data[str(arr_list)]['val']))
+                    elif replace2[replace1.index(arr_list)] == 'split' :
+                        list_arr.append('<span class="bg-warning mx-1 text-black rounded">%s</span>'%(raw_data[str(arr_list)]['val']))
+                    elif replace2[replace1.index(arr_list)] == 'merge' :
+                        list_arr.append('<span class="bg-success mx-1 text-black rounded">%s</span>'%(raw_data[str(arr_list)]['val']))
                 else:
                     list_arr.append(raw_data[str(arr_list)]['val'])
             context_list[filename] = list_arr
