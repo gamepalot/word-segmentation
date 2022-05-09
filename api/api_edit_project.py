@@ -173,9 +173,3 @@ def deleteFiles(request) :
             sql = f""" UPDATE files SET is_deleted = 1 WHERE file_id = {file_id} """
             cursor.execute(sql)
     return JsonResponse({})
-
-
-def return_files(request) :
-    sql1 = f""" UPDATE files SET is_deleted = 0 """
-    cursor.execute(sql1)
-    return redirect('/')

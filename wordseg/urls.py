@@ -4,7 +4,6 @@ from wordseg_app import views
 from api import api_edit_project, api_filterfiles_edit, api_filterfiles_version, api_edit_wordseg, api_edit_version
 
 urlpatterns = [
-    path('test/', views.test),
     # admin page (http://127.0.0.1:8000/admin/)
     path('admin/', admin.site.urls),
 
@@ -24,14 +23,12 @@ urlpatterns = [
     re_path(r'login$', views.login, name='login'),
     re_path(r'logout$', views.logout, name='logout'),
     path('deletepj/', views.delete_project),
-    path('delete_all', views.delete_all),
 
     # API (http://127.0.0.1:8000/{Currentpage}/{API})
     # ! index page
     re_path(r'getinfoproject$', api_edit_project.getInfoProject, name='getinfoproject'),
     re_path(r'uploadfiles$', api_edit_project.uploadFiles, name='uploadfiles'),
     re_path(r'deletefiles$', api_edit_project.deleteFiles, name='deletefiles'),
-    path('return_files/', api_edit_project.return_files),
 
     # ! segmentation page
     path('segmentation/filterfiles', api_filterfiles_edit.fileterFiles),
